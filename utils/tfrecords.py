@@ -142,27 +142,3 @@ def generate_image_label_batch(images, labels, batch_size, num_classes, one_hot=
     # Display the training images in the visualizer.
     return images_batch, labels_batch
 
-
-def batch_test(tfrecord_file, mode='tf'):
-    """test function
-    """
-    batch_size = 10
-    num_classes = 10
-    tf_images, tf_labels = read_tfrecords(tfrecord_file)
-    tf_images = preprocessing_image(tf_images, mode)
-    images_batch, labels_batch = generate_image_label_batch(tf_images, tf_labels, batch_size=batch_size, num_classes=num_classes)
-    # open a session 
-    with tf.Session() as sess:
-        sess.run(tf.global_variables_initializer())
-        coord = tf.train.Coordinator()
-        threads = tf.train.start_queue_runners(coord=coord)
-
-        for i in range(batch_size):
-            images, labels = sess.run([images_batch, labels_batch])
-            print('image shape: {}, image tpye: {}, label type: {}'.format(images.shape, images.dtype, labels.dtype))
-        
-        coord.request_stop()
-        coord.join(threads)
-
-        # show_image((images[0, :, :, :]), 'image')
-        # print(images[0, :, :, :], labels[0])
