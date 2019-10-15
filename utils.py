@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 def load_label_file(file_path, shuffle=True):
     """load label file from a txt file, returns a image filename list and label list
     """
-    images_list = []
+    image_paths_list = []
     labels_list = []
     
     # open image and label file
@@ -19,14 +19,11 @@ def load_label_file(file_path, shuffle=True):
         random.shuffle(lines)
     
     for i in range(len(lines)):
-        images_list.append(lines[i][0])
+        image_paths_list.append(lines[i][0])
         labels_list.append(lines[i][1])
-    # get base file path
-    base_path = os.path.join(os.getcwd(), 'test_dataset', 'images')
-    #complet image file path with cwd base path
-    image_paths_list = [os.path.join(base_path, image_list) for image_list in images_list]
+    
     return image_paths_list, labels_list
-
+    
 
 def read_image(image_path, image_shape=(64, 64, 3)):
     """The function is to read image
@@ -89,6 +86,18 @@ def preprocessing_image(images, mode='tf'):
         raise ValueError('Preprocessing image mode should be one of 3 method (tf, torch, caffe)')
 
     return images
+
+
+def random_flip_image(image):
+    """Randomly flip image and label horizontally
+    
+    Args:
+        image: 3D tensor of shape [height, width, channels]
+    Return:
+        3D tensor of same type ans shape as image
+    """
+    image = tf.image.random_flip_left_right(image)
+    return image
 
 
 def show_image(image, title=None):
