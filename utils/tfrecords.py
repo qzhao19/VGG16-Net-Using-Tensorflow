@@ -17,7 +17,7 @@ def bytes_feature(value):
     return tf.train.Feature(bytes_list=tf.train.BytesList(value=[value]))
 
 
-def write_tfrecords(file_path, image_shape, tfrecord_file):
+def write_tfrecords(file_path, image_shape, tfrecords_file):
     """Function takes label and image height, width, channel etc, to store as tfrecord data 
     Args:
         file_path: the path to image_label_file
@@ -33,7 +33,7 @@ def write_tfrecords(file_path, image_shape, tfrecord_file):
         raise ValueError('The size of image dose not match with that of label.')
     
     # create a tfrecord writer
-    tfrecord_writer = tf.python_io.TFRecordWriter(tfrecord_file + '.tfrecords')
+    tfrecord_writer = tf.python_io.TFRecordWriter(tfrecords_file)
     for i, [image_path, label] in enumerate(zip(image_paths_list, labels_list)):
         # determine image path whether exists 
         if not os.path.exists(image_path):
@@ -47,7 +47,6 @@ def write_tfrecords(file_path, image_shape, tfrecord_file):
         image = read_image(image_path, image_shape)
         image_bytes = image.tostring()
         if i%100 == 0 or i == (len(image_paths_list)-1):
-            print('------------processing:%d-th-image-----------' %(i))
             print('current image_path=%s' %(image_path),'shape:{}'.format(image.shape),'labels:{}'.format(label))
         
         feature_dict = {}
@@ -60,10 +59,8 @@ def write_tfrecords(file_path, image_shape, tfrecord_file):
             tfrecord_writer.write(tf_example.SerializeToString())
             # print('TF record data has been done')
         except ValueError:
-            print('Invalid example, ignoring')
-            
+            print('Invalid example, ignoring')      
     tfrecord_writer.close()
-
 
 
 def read_tfrecords(tfrecord_file, image_shape=(64, 64, 3)):
