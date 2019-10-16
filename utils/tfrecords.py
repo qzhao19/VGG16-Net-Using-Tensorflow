@@ -5,19 +5,16 @@ from processing_image import read_image, preprocessing_image
 
 
 def int64_feature(value):
-    """
-    
+    """create int64 type feature 
     """
     if not isinstance(value, (tuple, list)):
         value = [value]
     return tf.train.Feature(int64_list=tf.train.Int64List(value=value))
 
 def bytes_feature(value):
-    """
-    
+    """create bytes type feature 
     """
     return tf.train.Feature(bytes_list=tf.train.BytesList(value=[value]))
-
 
 
 def write_tfrecords(file_path, image_shape, tfrecord_file):
