@@ -1,11 +1,11 @@
 import tensorflow as tf
-from processing_image import preprocessing_image
+from processing_image import preprocessing_image, show_image
 from tfrecords import read_tfrecords, generate_image_label_batch
 
 flags = tf.app.flags
 FLAGS = flags.FLAGS
 
-flags.DEFINE_string('tfrecord_file', './segnet_model', 'The path to saved checkpoints')
+flags.DEFINE_string('tfrecord_file', './17_flowers/tfrecords/valid_tfrecords.tfrecords', 'The path to saved checkpoints')
 
 flags.DEFINE_integer('batch_size', 10, 'The number of images in each batch during training')
 
@@ -62,7 +62,7 @@ def test_tfrecords_with_batch(tfrecord_file, batch_size, num_classes, mode='tf')
 # test_tfrecords_with_batch('./17_flowers/tfrecords/valid_tfrecords.tfrecords')
 
 if __name__ == '__main__':
-    mode = 'tf
+    mode = 'tf'
     batch_size = FLAGS.batch_size
     num_classes = FLAGS.num_classes
     tfrecord_file = FLAGS.tfrecord_file
