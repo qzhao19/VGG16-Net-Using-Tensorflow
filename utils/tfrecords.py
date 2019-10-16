@@ -143,6 +143,6 @@ def get_example_nums(tfrecords_file):
         tfrecords_file: tfrecord file path.
     """
     nums= 0
-    for record in tf.python_io.tf_record_iterator(tfrecords_file):
+    for record in tf.io.tf_record_iterator(tfrecords_file):
         nums += 1
     return nums
