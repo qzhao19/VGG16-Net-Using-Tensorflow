@@ -31,9 +31,9 @@ def batch_norm(inputs, is_training, scope):
     """
     # create a scope name
     with tf.variable_scope(scope.name) as scope:
-        return tf.cond(is_training, 
-                       tf.contrib.layers.batch_norm(inputs, center=True, is_training=True, scope=scope), 
-                       tf.contrib.layers.batch_norm(inputs, center=False, is_training=False, reuse=False, scope=scope))
+        return tf.cond(is_training,
+                       lambda: tf.contrib.layers.batch_norm(inputs, center=True, is_training=True, scope=scope), 
+                       lambda: tf.contrib.layers.batch_norm(inputs, center=False, is_training=False, reuse=True, scope=scope))
 
 
 def variable_with_weights_decay(shape, initializer, wd, name):
@@ -75,7 +75,7 @@ def conv2d(inputs, shape, strides, padding, is_training, name):
         biases = tf.get_variable('biases', shape=[shape[3]], initializer=tf.initializers.zeros())
         outputs = tf.nn.conv2d(inputs, weights, strides=strides, padding=padding)
         outputs = tf.nn.bias_add(outputs, bias=biases)
-        outputs = tf.nn.relu(batch_norm(outputs, is_training, scope), name=scope.name+'_norm_relu')
+        outputs = tf.nn.relu(batch_norm(outputs, is_training, scope), name=scope.name+'batch_norm/relu')
 
     return outputs
 
@@ -97,13 +97,17 @@ def fc(inputs, shape, name):
         # first 2 fully connected layers are regularised by weights decay
         weights = variable_with_weights_decay(shape=shape, initializer=tf.initializers.he_normal(), wd=5e-4, name='weights')
         # we initialize bias using a constant 0.1 to avoid backdrop issue
-        baises = tf.get_variable('biases', shape=[shape[1]], initializer=tf.constant_initializer(tf.constant(0.1, dtype=tf.float32, shape=[shape[1]])))
+        # biases = tf.get_variable('biases', shape=[shape[1]], initializer=tf.constant_initializer(tf.constant(0.1, dtype=tf.float32, shape=[shape[1]])))
+
+        # biases = tf.Variable(tf.constant(0.1, dtype=tf.float32, shape=[shape[1]]), name='biases')
+
+        biases = tf.get_variable('biases', shape=[shape[1]], initializer=tf.initializers.random_normal())
         outputs = tf.nn.bias_add(tf.matmul(inputs, weights), biases)
-        outputs = tf.nn.relu(outputs, name=scope.name+'_fc')
+        outputs = tf.nn.relu(outputs, name=scope.name)
     return outputs
 
 
-def drop(inputs, keep_prob, name):
+def dropout(inputs, keep_prob, name):
     """dropout layer, we use dropout regularisation for 2 first fully connected layers
     Args:
         inputs: 4D input tensor with float32
@@ -112,5 +116,4 @@ def drop(inputs, keep_prob, name):
     Returns:
         
     """
-    return tf.nn.dropout(inputs, rate=(1-keep_prob), name='dropout')
-
+    return tf.nn.dropout(inputs, rate=(1-keep_prob), name=name)
