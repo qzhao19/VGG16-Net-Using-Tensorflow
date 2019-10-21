@@ -3,7 +3,7 @@ import random
 import numpy as np
 
 
-def create_label_file(dir_path, output_path, shuffle=True):
+def write_label_file(dir_path, output_path, shuffle=True):
     """create train and validation data file 
     """
     if not os.path.exists(dir_path):
