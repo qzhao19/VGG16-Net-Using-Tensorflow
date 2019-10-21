@@ -5,10 +5,11 @@ def vgg16(inputs, num_classes, keep_prob, is_training):
     """vgg16 network
 
     """
-    x = tf.reshape(inputs, shape=[-1, 28, 28, 1])
+    # x = tf.reshape(inputs, shape=[-1, 28, 28, 3])
+    x = tf.nn.lrn(inputs, depth_radius=5, bias=1.0, alpha=0.0001, beta=0.75, name='inputs')
 
     # first conv block
-    conv1_1 = conv2d(x, shape=[3, 3, 1, 64], strides=[1, 1, 1, 1], padding='SAME', is_training=is_training, name='conv1_1')
+    conv1_1 = conv2d(x, shape=[3, 3, 3, 64], strides=[1, 1, 1, 1], padding='SAME', is_training=is_training, name='conv1_1')
     conv1_2 = conv2d(conv1_1, shape=[3, 3, 64, 64], strides=[1, 1, 1, 1], padding='SAME', is_training=is_training, name='conv1_2')
     pool1 = max_pooling(conv1_2, ksize=[2, 2], strides=[2, 2], padding='SAME', name='pool1')
 
@@ -37,7 +38,9 @@ def vgg16(inputs, num_classes, keep_prob, is_training):
 
     # fully connected block
     # flatten outputs of the previous layer as a one dimension vector
-    flatten_shape = tf.shape(pool5)[1] * tf.shape(pool5)[2] * tf.shape(pool5)[3]
+    # flatten_shape = tf.shape(pool5)[1] * tf.shape(pool5)[2] * tf.shape(pool5)[3]
+
+    flatten_shape = pool5.get_shape()[1].value * pool5.get_shape()[2].value * pool5.get_shape()[3].value
     fc1 = tf.reshape(pool5, shape=[-1, flatten_shape])
     fc1 = fc(fc1, shape=[flatten_shape, 4096], name='fc1')
     fc1 = dropout(fc1, keep_prob=0.5, name='dropout1')
@@ -47,6 +50,8 @@ def vgg16(inputs, num_classes, keep_prob, is_training):
 
     fc3 = fc(fc2, shape=[4096, num_classes], name='fc3')
     fc3 = dropout(fc3, keep_prob=0.5, name='dropout3')
-    logits = fc3
+
+    # output logits value
+    logits = tf.nn.softmax(fc3, name="softmax")
 
     return logits
