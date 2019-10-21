@@ -1,6 +1,6 @@
 import os
 import tensorflow as tf
-from build_dataset import load_label_file
+from build_label_file import load_label_file
 from processing_image import read_image, preprocessing_image
 
 
