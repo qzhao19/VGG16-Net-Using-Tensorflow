@@ -4,7 +4,6 @@ from build_label_file import load_label_file
 from processing_image import read_image, preprocessing_image
 
 
-
 def int64_feature(value):
     """create int64 type feature 
     """
@@ -18,11 +17,11 @@ def bytes_feature(value):
     return tf.train.Feature(bytes_list=tf.train.BytesList(value=[value]))
 
 
-def write_tfrecords(file_path, image_shape, tfrecords_file):
+def write_tfrecords(file_path, shape, tfrecords_file):
     """Function takes label and image height, width, channel etc, to store as tfrecord data 
     Args:
         file_path: the path to image_label_file
-        image_size: int tuple, containing image height and image width
+        shape: int tuple, containing image height and image width
         output_tfrecords_dir: the path points output_tfrecords_dir
     Raises:
         ValueError: 
@@ -45,15 +44,15 @@ def write_tfrecords(file_path, image_shape, tfrecords_file):
             raise ValueError('The format of image must be jpg or JEPG')
             continue
         # read image and convert it into bytes data
-        image = read_image(image_path, image_shape)
+        image = read_image(image_path, shape)
         image_bytes = image.tostring()
         if i%100 == 0 or i == (len(image_paths_list)-1):
             print('current image_path=%s' %(image_path),'shape:{}'.format(image.shape),'labels:{}'.format(label))
         
         feature_dict = {}
-        tf_example = tf.train.Example(features=tf.train.Features(feature={'image_height': int64_feature(image_shape[0]), 
-                                                                          'image_width': int64_feature(image_shape[1]), 
-                                                                          'image_depth': int64_feature(image_shape[2]),
+        tf_example = tf.train.Example(features=tf.train.Features(feature={'image_height': int64_feature(shape[0]), 
+                                                                          'image_width': int64_feature(shape[1]), 
+                                                                          'image_depth': int64_feature(shape[2]),
                                                                           'image': bytes_feature(image_bytes),
                                                                           'label': int64_feature(int(label))}))
         try:
@@ -64,11 +63,11 @@ def write_tfrecords(file_path, image_shape, tfrecords_file):
     tfrecord_writer.close()
 
 
-def read_tfrecords(tfrecord_file, image_shape=(64, 64, 3)):
+def read_tfrecords(tfrecord_file, shape=(64, 64, 3)):
     """Read tf records file
     Args:
         tfrecords_path: string, output tensorflow records data path
-        preprocessing: bool, maje sure that we need to preprocessing image
+        shape: tuple, image shape with [height, width, channel]
     Returns:
         tf image with float32 data and tf label with int32
     """
@@ -92,12 +91,13 @@ def read_tfrecords(tfrecord_file, image_shape=(64, 64, 3)):
     # get image raw data
     images = tf.decode_raw(features['image'], out_type=tf.uint8)
     # reshape image
-    images = tf.reshape(images, shape=[image_shape[0], image_shape[1], image_shape[2]])
+    images = tf.reshape(images, shape=[shape[0], shape[1], shape[2]])
     images = tf.cast(images, dtype=tf.float32)
     
     labels = tf.cast(features['label'], tf.int32)
     
     return images, labels
+
 
 
 def generate_image_label_batch(images, labels, batch_size, num_classes, one_hot=True, shuffle=True):
@@ -143,6 +143,6 @@ def get_example_nums(tfrecords_file):
         tfrecords_file: tfrecord file path.
     """
     nums= 0
-    for record in tf.io.tf_record_iterator(tfrecords_file):
+    for record in tf.python_io.tf_record_iterator(tfrecords_file):
         nums += 1
     return nums
