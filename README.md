@@ -9,7 +9,7 @@ Vgg16 network achieved 92.7% top-5 test accuracy in ImageNet, which stores over 
 
 
 <p align="center">
-	<img src="https://github.com/zhaoqi19/VGG16-Net-Using-Tensorflow/blob/master/image/vgg16.png"  width="560" height="480">
+	<img src="https://github.com/zhaoqi19/VGG16-Net-Using-Tensorflow/blob/master/image/vgg16.png"  width="560" height="400">
 	<p align="center">
 		<em>Vgg16 architecture</em>
 	</p>
