@@ -7,7 +7,7 @@ In this repertoire, I have implemented Vgg16 network using tensorflow. Vgg16 is 
 
 Vgg16 network achieved 92.7% top-5 test accuracy in ImageNet, which stores over 14 million images belonging to 1000 classes. The network architecture presents image below:
 
-![image](https://github.com/zhaoqi19/VGG16-Net-Using-Tensorflow/blob/master/image/vgg16.png){:height="36px" width="36px"}
+![image](https://github.com/zhaoqi19/VGG16-Net-Using-Tensorflow/blob/master/image/vgg16.png){height="36px" width="36px"}
 
 For more details on the underlying model please refer to the following paper:
 
