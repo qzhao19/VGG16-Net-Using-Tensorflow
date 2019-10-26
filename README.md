@@ -46,18 +46,18 @@ For more details on the underlying model please refer to the following paper:
 First, I strongly recommend to take a look at the entire code of this repository. In fact, even Tensorflow and Keras allow us to import and download the MNIST dataset directly from their API. Therefore, I will start with the following two lines to import tensorflow and MNIST dataset under the Tensorflow API. A local training job can be run with the following command:
 
     python train.py \
-		--valid_steps=11 \
-		--max_steps="1001" \
-		--batch_size="128" \
-		--base_learning_rate=0.001 \
-		--input_shape=784 \
-		--num_classes=10 \
-		--keep_prob=0.75 \
-		--image_height \
-		--image_width \
-		--image_channel\
-		--mode \
-		--train_tfrecords_file \
-		--valid_tfrecords_file \
-		--tensorboard_dir \
-		--saver_dir
+		--valid_steps = 11 \
+		--max_steps = 1001 \
+		--batch_size = 128 \
+		--base_learning_rate = 0.001 \
+		--input_shape = 784 \
+		--num_classes = 10 \
+		--keep_prob = 0.75 \
+		--image_height = 64 \
+		--image_width = 64 \
+		--image_channel = 3 \
+		--mode = 'tf' \
+		--train_tfrecords_file = './17_flowers/tfrecords/train_tfrecords.tfrecords' \
+		--valid_tfrecords_file = './17_flowers/tfrecords/valid_tfrecords.tfrecords' \
+		--tensorboard_dir = './17_flowers/tensorboard_logs/' \
+		--saver_dir = './17_flowers/vgg16_model/'
