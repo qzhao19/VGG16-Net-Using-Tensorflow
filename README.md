@@ -40,3 +40,18 @@ For more details on the underlying model please refer to the following paper:
 - `train.py`: Script to run the training process.
 - `images/*`: contains three example images.
 - `outputs`: output result folder containing two sub-folder (accuracy_loss and model)
+
+# Usages
+
+First, I strongly recommend to take a look at the entire code of this repository. In fact, even Tensorflow and Keras allow us to import and download the MNIST dataset directly from their API. Therefore, I will start with the following two lines to import tensorflow and MNIST dataset under the Tensorflow API. A local training job can be run with the following command:
+
+    python train.py \
+        --valid_steps=11 \
+        --max_steps="1001" \
+        --batch_size="128" \
+        --base_learning_rate=0.001 \
+        --input_shape=784 \
+        --num_classes=10 \
+        --keep_prob=0.75 \
+        --save_dir='./outputs' \
+        --tb_path='./tb_logs' 
