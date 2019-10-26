@@ -38,8 +38,22 @@ For more details on the underlying model please refer to the following paper:
 - `layers.py`: Neuron network layers containing convolutional layer, full collection layer, batch normalization and maxpooling.
 - `evals.py`: Model evaluation's function containing calc_loss_acc and train_op.
 - `train.py`: Script to run the training process.
-- `images/*`: contains three example images.
-- `outputs`: output result folder containing two sub-folder (accuracy_loss and model)
+- `images/*`: contains example images.
+- `17_flowers/*`
+	- `images/*` : dataset directory (you should put the 17flowers dataset into here)
+	- `tensorboard_dir/*` : tensorboard logs path
+		- `train`
+		- `valid` 
+	- `tfrecords/*` : tfrecords file directory
+		- `train_tfrecords/*`
+		- `valid_tfrecords/*`
+	- `train_valid_file/*` 
+	- `vgg16_model/*` 
+- `utils`:
+	- `build_label_file.py` : create the label_file to read image and label
+	- `processing_image.py` : processe image 
+	- `tfrecords.py` : create tfrecords file and read tfrecords file
+	- `tfrecords.py` : test tfrecords.py file 
 
 # Usages
 
