@@ -53,5 +53,11 @@ First, I strongly recommend to take a look at the entire code of this repository
         --input_shape=784 \
         --num_classes=10 \
         --keep_prob=0.75 \
-        --save_dir='./outputs' \
-        --tb_path='./tb_logs' 
+	--image_height \
+	--image_width \
+	--image_channel\
+	--mode \
+	--train_tfrecords_file \
+	--valid_tfrecords_file \
+        --tensorboard_dir \
+        --saver_dir
