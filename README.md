@@ -57,7 +57,7 @@ For more details on the underlying model please refer to the following paper:
 
 # Usages
 
-First, I strongly recommend to take a look at the entire code of this repository. In fact, even Tensorflow and Keras allow us to import and download the MNIST dataset directly from their API. Therefore, I will start with the following two lines to import tensorflow and MNIST dataset under the Tensorflow API. A local training job can be run with the following command:
+First, I strongly recommend to take a look at the entire code of this repository. In fact, we need to download the 17 flowers dataset directly from [here](http://www.robots.ox.ac.uk/~vgg/data/flowers/17/). Therefore, I will start with the following two lines to import tensorflow and MNIST dataset under the Tensorflow API. A local training job can be run with the following command:
 
     python train.py \
 		--valid_steps = 11 \
