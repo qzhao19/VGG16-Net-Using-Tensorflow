@@ -57,7 +57,7 @@ For more details on the underlying model please refer to the following paper:
 
 # Usages
 
-First, I strongly recommend to take a look at the entire code of this repository. In fact, we need to download the 17 flowers dataset directly from [here](http://www.robots.ox.ac.uk/~vgg/data/flowers/17/). A local training job can be run with the following command:
+First, I strongly recommend to take a look at the entire code of this repository. In fact, we need to download the 17 flowers dataset directly from [here](https://github.com/ck196/tensorflow-alexnet/blob/master/17flowers.tar.gz). A local training job can be run with the following command:
 
     python train.py \
 		--valid_steps = 11 \
