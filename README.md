@@ -53,7 +53,7 @@ For more details on the underlying model please refer to the following paper:
 	- `build_label_file.py` : create the label_file to read image and label
 	- `processing_image.py` : processe image 
 	- `tfrecords.py` : create tfrecords file and read tfrecords file
-	- `tfrecords.py` : test tfrecords.py file 
+	- `tfrecords_test.py` : test tfrecords.py file 
 
 # Usages
 
@@ -75,3 +75,5 @@ First, I strongly recommend to take a look at the entire code of this repository
 		--valid_tfrecords_file = './17_flowers/tfrecords/valid_tfrecords.tfrecords' \
 		--tensorboard_dir = './17_flowers/tensorboard_logs/' \
 		--saver_dir = './17_flowers/vgg16_model/'
+
+Before you run command, you firstly need to put 17 flowers into the repository `17_flowers/images`, then you should run script build_tfrecords.py
