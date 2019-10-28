@@ -76,4 +76,16 @@ First, I strongly recommend to take a look at the entire code of this repository
 		--tensorboard_dir = './17_flowers/tensorboard_logs/' \
 		--saver_dir = './17_flowers/vgg16_model/'
 
-Before you run command, you firstly need to put 17 flowers into the repository `17_flowers/images`, then you should run script build_tfrecords.py
+Before you run command, you firstly need to put 17 flowers into the repository `17_flowers/images`, then you should run script build_tfrecords.py using following command:
+
+	python train.py \
+		--train_tfrecords_file = './17_flowers/tfrecords/train_tfrecords.tfrecords' \
+		--valid_tfrecords_file = './17_flowers/tfrecords/valid_tfrecords.tfrecords' \
+		--train_file = './17_flowers/train_valid_file/train_file.txt'
+		--valid_file = './17_flowers/train_valid_file/valid_file.txt'
+		--image_height = 64 \
+		--image_width = 64 \
+		--image_channel = 3 \
+		
+
+
